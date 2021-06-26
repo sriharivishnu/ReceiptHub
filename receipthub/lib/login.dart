@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:receipthub/SizeConfig.dart';
+import 'package:receipthub/constants.dart';
+import 'package:receipthub/routeFunctions.dart';
 
 import 'home/home.dart';
+import 'login/register.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key, required this.title}) : super(key: key);
@@ -24,20 +29,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
-  void goToLogin() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => MyHomePage(
-                title: "Home Page",
-              )),
-    );
-  }
-
-  void testFunction() {
-    print('Jason in testFunction');
-  }
-
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 3),
     vsync: this,
@@ -55,108 +46,141 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final loginLogo = Image.asset(
+    final defaultLogo = Image.asset(
       'assets/images/logo.png',
       width: 200,
       height: 200,
     );
-    final emailField = TextField(
-      obscureText: false,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Email",
-          hintStyle: TextStyle(color: CupertinoColors.inactiveGray),
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
-    final passwordField = TextField(
-      obscureText: true,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: "Password",
-          hintStyle: TextStyle(color: CupertinoColors.inactiveGray),
-          border:
-              OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
-    );
+    final emailField = FormFieldWidget(
+        labelText: "Email",
+        hintText: "Enter your email",
+        icon: "assets/images/mail.png");
+    final passwordField = FormFieldWidget(
+        labelText: "Password",
+        hintText: "Enter your password",
+        icon: "assets/images/lock.png");
     final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff2fb1ed),
-      // child: AnimatedButton(
-      //   height: 70,
-      //   width: 200,
-      //   text: 'Login',
-      //   isReverse: true,
-      //   animationDuration: const Duration(milliseconds: 250),
-      //   selectedTextColor: Color(0xff2fb1ed),
-      //   transitionType: TransitionType.BOTTOM_CENTER_ROUNDER,
-      //   textStyle: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-      //   backgroundColor: Color(0xff2fb1ed),
-      //   borderColor: Color(0xff2fb1ed),
-      //   borderRadius: 50,
-      //   borderWidth: 2,
-      //   onPress: goToLogin,
-      //   onPress: testFunction,
-      //   ),
+      color: textBlue,
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: goToLogin,
+        onPressed: () {
+          Navigator.of(context).push(createRouteToHome());
+        },
         child: Text("Login",
             textAlign: TextAlign.center,
             style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
+                color: darkBlue, fontWeight: FontWeight.bold)),
       ),
     );
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 1000),
-      child: Scaffold(
+    final registerMessage = Container(
+      color: Colors.transparent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(padding: EdgeInsets.all(5.0),
+              child: Text(
+                "Don't have an account?",
+                style: style.copyWith(
+                  fontSize: 14.0,
+                  color: textBlue,
+                ),
+              ),
+            ),
+            GestureDetector(
+                child: Text("Sign Up", style: TextStyle(fontSize: 14.0, decoration: TextDecoration.underline, color: Colors.blue)),
+                onTap: () {
+                  Navigator.of(context).push(createRouteToRegister());
+                }
+            ),
+          ],
+        ),
+    );
+     return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: backgroundBlue,
         body: Center(
-          child: InkWell(
-            onTap: () {
-              print("tapped");
-            },
             child: Container(
-              color: Colors.white,
+              color: backgroundBlue,
               child: Padding(
                 padding: const EdgeInsets.all(36.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SizeTransition(
-                      sizeFactor: _animation,
-                      axis: Axis.horizontal,
-                      axisAlignment: -1,
-                      child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                          child: loginLogo),
+                    Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                      child: Text(
+                        "ReceiptHub",
+                        style: style.copyWith(
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                          color: textBlue,
+                        ),
+                      ),
                     ),
+                    Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                          child: defaultLogo),
                     SizedBox(height: 45.0),
                     emailField,
                     SizedBox(height: 25.0),
                     passwordField,
-                    Material(
-                        color: Colors.transparent,
-                        child: InkResponse(
-                          child: Padding(
+                    Padding(
                             padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                             child: SizedBox(
-                              height: 60.0,
+                              height: 65.0,
                               child: loginButton,
                             ),
                           ),
-                          onTap: () {},
-                        )),
+                    Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                    child: registerMessage),
                   ],
                 ),
               ),
             ),
-          ),
         ),
-      ),
+    );
+  }
+}
+
+class FormFieldWidget extends StatelessWidget {
+  static const TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
+
+  const FormFieldWidget({
+    required this.labelText,
+    required this.hintText,
+    required this.icon,
+});
+  final String hintText, labelText, icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      obscureText: false,
+      style: style.copyWith(color: textBlue),
+      decoration: InputDecoration(
+          labelText: this.labelText,
+          hintText: this.hintText,
+          contentPadding: EdgeInsets.symmetric(horizontal: 42, vertical: 20),
+          hintStyle: TextStyle(color: textBlue),
+          labelStyle: TextStyle(color: textBlue),
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          suffixIcon: Padding(padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: Image.asset(this.icon,
+              width: 30,
+              height: 30,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: textBlue, width: 2),
+            borderRadius: BorderRadius.circular(32.0),
+          ),
+          border:
+          OutlineInputBorder(borderRadius: BorderRadius.circular(32.0))),
     );
   }
 }
