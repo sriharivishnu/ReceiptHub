@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:receipthub/constants.dart';
 import 'package:receipthub/home/home.dart';
 
 import '../login.dart';
 import 'package:receipthub/login.dart';
-
-import '../routeFunctions.dart';
 
 
 class MyRegisterPage extends StatefulWidget {
@@ -20,6 +19,24 @@ class MyRegisterPage extends StatefulWidget {
 
 class _MyRegisterPageState extends State<MyRegisterPage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
+  void goToLoginPage() {
+    Navigator.push(
+      context,
+      PageTransition(
+          type: PageTransitionType.leftToRight,
+          child: LoginPage(title: "Login Page")),
+    );
+  }
+
+  void goToHomePage() {
+    Navigator.push(
+      context,
+      PageTransition(
+          type: PageTransitionType.leftToRight,
+          child: MyHomePage(title: "Home Page")),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +61,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.of(context).push(createRouteToHome());
+          goToHomePage();
         },
         child: Text("Register",
             textAlign: TextAlign.center,
@@ -70,7 +87,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
           GestureDetector(
               child: Text("Login", style: TextStyle(fontSize: 14.0, decoration: TextDecoration.underline, color: Colors.blue)),
               onTap: () {
-                Navigator.of(context).push(createRouteToLogin());
+                goToLoginPage();
               }
           ),
         ],
