@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  flutter_animated_button: 2.0.0
   flutter:
     sdk: flutter
 
@@ -48,6 +49,8 @@ flutter:
 #  assets:
 #    - assets/
 
+  assets:
+    - assets/images/logo.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

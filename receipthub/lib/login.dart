@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_button/flutter_animated_button.dart';
 
 import 'home.dart';
 
@@ -36,6 +37,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final image = Image.asset(
+        'assets/images/logo.png',
+        width: 200,
+        height: 200,
+    );
     final emailField = TextField(
       obscureText: false,
       style: style,
@@ -59,19 +65,39 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Material(
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
-      color: Color(0xff01A0C7),
-      child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-        onPressed: goToLogin,
-        child: Text("Login",
-            textAlign: TextAlign.center,
-            style: style.copyWith(
-                color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+      color: Color(0xff2fb1ed),
+        child: AnimatedButton(
+          height: 70,
+          width: 200,
+          text: 'Login',
+          isReverse: true,
+          selectedTextColor: Colors.green,
+          transitionType: TransitionType.LEFT_TO_RIGHT,
+          textStyle: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          backgroundColor: Color(0xff2fb1ed),
+          borderColor: Color(0xff2fb1ed),
+          borderRadius: 50,
+          borderWidth: 2,
+          onPress: goToLogin,
+        ),
+      // child: MaterialButton(
+      //   minWidth: MediaQuery.of(context).size.width,
+      //   padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      //   onPressed: goToLogin,
+      //   child: Text("Login",
+      //       textAlign: TextAlign.center,
+      //       style: style.copyWith(
+      //           color: Colors.white, fontWeight: FontWeight.bold)),
+      // ),
     );
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Login Page'),
+        backgroundColor: Color(0xff2fb1ed),
+      ),
       body: Center(
+        child: InkWell(
+          onTap: (){print("tapped");},
         child: Container(
           color: Colors.white,
           child: Padding(
@@ -87,21 +113,25 @@ class _LoginPageState extends State<LoginPage> {
                 //     fit: BoxFit.contain,
                 //   ),
                 // ),
+                InkWell(
+                  child: Padding(padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                  child: image)),
                 SizedBox(height: 45.0),
                 emailField,
                 SizedBox(height: 25.0),
                 passwordField,
-                SizedBox(
-                  height: 35.0,
-                ),
-                loginButton,
-                SizedBox(
-                  height: 15.0,
-                ),
+                InkResponse(
+                  child: Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      child: SizedBox(height: 60.0,
+                        child: loginButton,
+                   ),
+                 ),
+                )
               ],
             ),
           ),
         ),
+      ),
       ),
     );
   }
