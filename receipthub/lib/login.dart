@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'home/home.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key, required this.title}) : super(key: key);
@@ -21,7 +21,7 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   void goToLogin() {
@@ -56,9 +56,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
   @override
   Widget build(BuildContext context) {
     final loginLogo = Image.asset(
-        'assets/images/logo.png',
-        width: 200,
-        height: 200,
+      'assets/images/logo.png',
+      width: 200,
+      height: 200,
     );
     final emailField = TextField(
       obscureText: false,
@@ -84,21 +84,21 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
       elevation: 5.0,
       borderRadius: BorderRadius.circular(30.0),
       color: Color(0xff2fb1ed),
-        // child: AnimatedButton(
-        //   height: 70,
-        //   width: 200,
-        //   text: 'Login',
-        //   isReverse: true,
-        //   animationDuration: const Duration(milliseconds: 250),
-        //   selectedTextColor: Color(0xff2fb1ed),
-        //   transitionType: TransitionType.BOTTOM_CENTER_ROUNDER,
-        //   textStyle: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-        //   backgroundColor: Color(0xff2fb1ed),
-        //   borderColor: Color(0xff2fb1ed),
-        //   borderRadius: 50,
-        //   borderWidth: 2,
-        //   onPress: goToLogin,
-        //   onPress: testFunction,
+      // child: AnimatedButton(
+      //   height: 70,
+      //   width: 200,
+      //   text: 'Login',
+      //   isReverse: true,
+      //   animationDuration: const Duration(milliseconds: 250),
+      //   selectedTextColor: Color(0xff2fb1ed),
+      //   transitionType: TransitionType.BOTTOM_CENTER_ROUNDER,
+      //   textStyle: style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+      //   backgroundColor: Color(0xff2fb1ed),
+      //   borderColor: Color(0xff2fb1ed),
+      //   borderRadius: 50,
+      //   borderWidth: 2,
+      //   onPress: goToLogin,
+      //   onPress: testFunction,
       //   ),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
@@ -111,46 +111,52 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin{
       ),
     );
     return AnimatedSwitcher(
-    duration: const Duration(milliseconds: 1000),
-    child: Scaffold(
-      body: Center(
-        child: InkWell(
-          onTap: (){print("tapped");},
-        child: Container(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizeTransition(sizeFactor: _animation,
-                  axis: Axis.horizontal,
-                axisAlignment: -1,
-                child: Padding(padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-                    child: loginLogo),),
-                SizedBox(height: 45.0),
-                emailField,
-                SizedBox(height: 25.0),
-                passwordField,
-                Material(
-                  color: Colors.transparent,
-                  child: InkResponse(
-                    child: Padding(padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: SizedBox(height: 60.0,
-                        child: loginButton,
-                      ),
+      duration: const Duration(milliseconds: 1000),
+      child: Scaffold(
+        body: Center(
+          child: InkWell(
+            onTap: () {
+              print("tapped");
+            },
+            child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(36.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizeTransition(
+                      sizeFactor: _animation,
+                      axis: Axis.horizontal,
+                      axisAlignment: -1,
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+                          child: loginLogo),
                     ),
-                    onTap: () {},
-                  )
+                    SizedBox(height: 45.0),
+                    emailField,
+                    SizedBox(height: 25.0),
+                    passwordField,
+                    Material(
+                        color: Colors.transparent,
+                        child: InkResponse(
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                            child: SizedBox(
+                              height: 60.0,
+                              child: loginButton,
+                            ),
+                          ),
+                          onTap: () {},
+                        )),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),
       ),
-      ),
-    ),
-   );
+    );
   }
 }
