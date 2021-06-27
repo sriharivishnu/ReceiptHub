@@ -2,6 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:receipthub/receipts/receipts.dart';
+import 'package:receipthub/trends.dart';
 
 import '../constants.dart';
 import '../login.dart';
@@ -48,6 +49,7 @@ class _MainClassState extends State<MainClass> {
   List listOfPages = [
     MyHomePage(title: "Home Page"),
     ReceiptPage(title: "My Receipts"),
+    Trends(title: "Title Page"),
   ];
 
   Widget build(BuildContext context) {

@@ -7,6 +7,8 @@ import 'package:receipthub/home/home.dart';
 import '../login.dart';
 import 'package:receipthub/login.dart';
 
+import '../main.dart';
+
 
 class MyRegisterPage extends StatefulWidget {
   MyRegisterPage({Key? key, required this.title}) : super(key: key);
@@ -34,14 +36,14 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
       context,
       PageTransition(
           type: PageTransitionType.leftToRight,
-          child: MyHomePage(title: "Home Page")),
+          child: MainClass()),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final defaultLogo = Image.asset(
-      'assets/images/logo.png',
+      'assets/images/blueReceiptLogo.png',
       width: 200,
       height: 200,
     );
@@ -126,7 +128,7 @@ class _MyRegisterPageState extends State<MyRegisterPage> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                     child: SizedBox(
-                      height: 65.0,
+                      height: 60.0,
                       child: registerButton,
                     ),
                   ),

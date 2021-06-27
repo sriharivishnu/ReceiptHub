@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final defaultLogo = Image.asset(
-      'assets/images/logo.png',
+      'assets/images/blueReceiptLogo.png',
       width: 200,
       height: 200,
     );
@@ -151,14 +151,14 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                 SizedBox(height: 25.0),
                 passwordField,
                 Padding(
-                  padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
+                  padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                   child: SizedBox(
-                    height: 55.0,
+                    height: 60.0,
                     child: loginButton,
                   ),
                 ),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                     child: registerMessage),
               ],
             ),

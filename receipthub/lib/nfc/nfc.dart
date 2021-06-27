@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 import 'package:provider/provider.dart';
 
+import '../constants.dart';
 import '../home/home.dart';
 
 Future<bool> isAvailable() async {
@@ -72,15 +73,29 @@ class TagReadPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: backgroundBlue,
         appBar: AppBar(
-          title: Text('Tag - Read'),
+          title: Text('Tag - Read',
+              style: TextStyle(
+                color: backgroundBlue,
+              )),
         ),
         body: Consumer<TagReadModel>(
             builder: (context, model, _) =>
                 ListView(padding: EdgeInsets.all(2), children: [
-                  Button(
-                    callback: () => onStart(context),
-                    text: 'Read E-Receipt',
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(30, 40, 30, 20),
+                    child: Icon(Icons.wifi, size: 200, color: textBlue),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
+                    child: SizedBox(
+                        width: 20.0,
+                        height: 60.0,
+                        child: Button(
+                          callback: () => onStart(context),
+                          text: 'Read E-Receipt',
+                        )),
                   ),
                   if (model.tag != null) _buildTagWidget(context, model.tag!),
                   if (loading)
