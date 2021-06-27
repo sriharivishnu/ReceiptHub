@@ -47,12 +47,18 @@ class TagReadPage extends StatelessWidget {
     Object? tech;
 
     tech = Ndef.from(tag);
+    res += tech.toString();
+    res += ("Outside NDEF");
     if (tech is Ndef) {
+      res += "Entered tech";
       final cachedMessage = tech.cachedMessage;
+      res += "is writable: " + tech.isWritable.toString();
       if (cachedMessage != null) {
+        res += ("IN CACHED");
         final record = cachedMessage.records[0];
         final payload = record.payload;
-        res = utf8.decode(payload);
+        // res = utf8.decode(payload);
+        res += "ID: " + utf8.decode(record.identifier);
       }
     }
     return Text(res);
