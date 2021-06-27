@@ -43,23 +43,20 @@ class TagReadPage extends StatelessWidget {
       );
 
   Widget _buildTagWidget(BuildContext context, NfcTag tag) {
-    var res = "No Data";
+    var res = "Loading...";
     Object? tech;
 
     tech = Ndef.from(tag);
-    res += tech.toString();
-    res += ("Outside NDEF");
     if (tech is Ndef) {
-      res += "Entered tech";
       final cachedMessage = tech.cachedMessage;
-      res += "is writable: " + tech.isWritable.toString();
       if (cachedMessage != null) {
-        res += ("IN CACHED");
         final record = cachedMessage.records[0];
         final payload = record.payload;
-        // res = utf8.decode(payload);
-        res += "ID: " + utf8.decode(record.identifier);
+        res = utf8.decode(payload);
       }
+    }
+    if (res == "Loading...") {
+      res = "No Data";
     }
     return Text(res);
   }

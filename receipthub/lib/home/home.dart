@@ -1,4 +1,3 @@
-import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,10 +8,9 @@ import '../components/chart.dart';
 import '../components/chart2.dart';
 import '../components/chart3.dart';
 import '../constants.dart';
-import '../login.dart';
 import '../nfc/nfc.dart';
 import '../receipts/receipts.dart';
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
+// import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -95,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Text("My Receipts",
             textAlign: TextAlign.center,
             style:
-            style.copyWith(color: darkBlue, fontWeight: FontWeight.bold)),
+                style.copyWith(color: darkBlue, fontWeight: FontWeight.bold)),
       ),
     );
 
@@ -114,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(height: 300, child: GalleryView()),
 
               Container(
-                  width: screenWidth * 0.5,
+                width: screenWidth * 0.5,
                 child: myReceiptsButton,
               ),
             ]),
@@ -135,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-              // bottomNavigationBar: actionBar,
+          // bottomNavigationBar: actionBar,
         )));
   }
 }

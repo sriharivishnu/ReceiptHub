@@ -1,9 +1,12 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:receipthub/home/home.dart';
 
 import '../constants.dart';
-import '../login.dart';
 import '../models/Receipt.dart';
 
 class ReceiptPage extends StatefulWidget {
@@ -27,26 +30,42 @@ class ReceiptPage extends StatefulWidget {
 class _ReceiptPageState extends State<ReceiptPage>
     with TickerProviderStateMixin {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  late Future<List<Receipt>> receiptData;
 
-  var receiptData = [
-    Receipt([Item("Milk", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Cheese", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Goat", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Paul", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Cookies", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
+  var mockData = [
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
+    Receipt(
+        items: [Item(name: "Milk", price: 10.99)],
+        store: Store(name: "Zehrs", location: "Luxembourg", id: "ID")),
   ];
+
   void onBackButton() {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => MyHomePage(
-            title: "Home Page",
-          )),
+                title: "Home Page",
+              )),
     );
   }
 
@@ -55,9 +74,33 @@ class _ReceiptPageState extends State<ReceiptPage>
       context,
       MaterialPageRoute(
           builder: (context) => MyHomePage(
-            title: "Home Page",
-          )),
+                title: "Home Page",
+              )),
     );
+  }
+
+  Future<List<Receipt>> fetchReceipts() async {
+    final response =
+        await http.get(Uri.parse('https://receipthub.herokuapp.com/receipt'));
+    print(response.body);
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      var receipts = <Receipt>[];
+      for (Map<String, dynamic> x in jsonDecode(response.body)["data"]) {
+        receipts.add(Receipt.fromJson(x));
+      }
+      print("HERE" + receipts.toString());
+      return receipts;
+    } else {
+      throw Exception('Failed to load receipts');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    receiptData = fetchReceipts();
   }
 
   @override
@@ -65,38 +108,60 @@ class _ReceiptPageState extends State<ReceiptPage>
     return Container(
         color: backgroundBlue,
         child: SafeArea(
-          child: Scaffold(
-              backgroundColor: backgroundBlue,
-              body: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      child: Icon(Icons.arrow_back_ios_new_rounded,
-                        color: textBlue,),
-                      onTap: onBackButton,
-                    ),
-                    Padding(
-                        child: Text("Receipts",
-                            style: TextStyle(
-                              color: textBlue,
-                                fontSize: 40, fontWeight: FontWeight.w500)),
-                        padding: EdgeInsets.symmetric(vertical: 10))
-                  ],
+            child: Scaffold(
+          backgroundColor: backgroundBlue,
+          body: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  child: Icon(
+                    Icons.arrow_back_ios_new_rounded,
+                    color: textBlue,
+                  ),
+                  onTap: onBackButton,
                 ),
-                Expanded(
-                    child: GridView.count(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        scrollDirection: Axis.vertical,
-                        // Generate 100 widgets that display their index in the List.
-                        children: receiptData
-                            .map((item) => ReceiptWidget(receipt: item))
-                            .toList()))
-              ]),
-          ),
-        ));
+                Padding(
+                    child: Text("Receipts",
+                        style: TextStyle(
+                            color: textBlue,
+                            fontSize: 40,
+                            fontWeight: FontWeight.w500)),
+                    padding: EdgeInsets.symmetric(vertical: 10))
+              ],
+            ),
+            // FutureBuilder<List<Receipt>>(
+            //   future: receiptData,
+            //   builder: (context, snapshot) {
+            //     if (snapshot.hasData) {
+            //       return Expanded(
+            //           child: GridView.count(
+            //               crossAxisCount: 2,
+            //               mainAxisSpacing: 12,
+            //               crossAxisSpacing: 12,
+            //               scrollDirection: Axis.vertical,
+            //               // Generate 100 widgets that display their index in the List.
+            //               children: snapshot.data!
+            //                   .map((item) => ReceiptWidget(receipt: item))
+            //                   .toList()));
+            //     }
+            //
+            //     // By default, show a loading spinner.
+            //     return CircularProgressIndicator();
+            //   },
+            // )
+            Expanded(
+                child: GridView.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    scrollDirection: Axis.vertical,
+                    // Generate 100 widgets that display their index in the List.
+                    children: mockData
+                        .map((item) => ReceiptWidget(receipt: item))
+                        .toList()))
+          ]),
+        )));
   }
 }
 
@@ -157,6 +222,5 @@ class ReceiptWidget extends StatelessWidget {
         ),
       ),
     );
-
   }
 }
