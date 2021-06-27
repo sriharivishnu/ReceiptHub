@@ -29,11 +29,13 @@ class _ReceiptPageState extends State<ReceiptPage>
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
   var receiptData = [
-    Receipt([Item("Milk", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Cheese", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Goat", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Paul", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
-    Receipt([Item("Cookies", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
+    Receipt([Item("Burger", 5.99)], Store("McDonald's", "Kitchener", "ID"), 8),
+    Receipt([Item("Cheese", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 18),
+    Receipt([Item("Goat", 10.99)], Store("Walmart", "TownTown", "ID"), 21),
+    Receipt([Item("Paul", 10.99)], Store("ThePaulStore", "Far Away", "ID"), 16),
+    Receipt([Item("iPhone X", 1000.99)], Store("Best Buy", "Waterloo", "ID"), 1),
+    Receipt([Item("1 Slice Pepperoni", 2.99)], Store("Papa John's", "Waterloo", "ID"), 2),
+    Receipt([Item("Penne Alfredo", 16.99)], Store("East Side Mario's", "Guelph", "ID"), 99),
     Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
     Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
     Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
@@ -131,7 +133,7 @@ class ReceiptWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "9.99",
+                  receipt.items[0].price.toString(),
                   style: TextStyle(color: textBlue, fontSize: 12.0),
                   textAlign: TextAlign.center,
                 ),
@@ -139,7 +141,7 @@ class ReceiptWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "Test Item Purchased",
+                  receipt.items[0].name,
                   style: TextStyle(color: textBlue, fontSize: 12.0),
                   textAlign: TextAlign.center,
                 ),
@@ -147,7 +149,7 @@ class ReceiptWidget extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                  "6:21 09/27/2002",
+                  receipt.creationDate.toString(),
                   style: TextStyle(color: textBlue, fontSize: 12.0),
                   textAlign: TextAlign.center,
                 ),
@@ -157,6 +159,5 @@ class ReceiptWidget extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

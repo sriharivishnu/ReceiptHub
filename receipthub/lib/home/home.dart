@@ -26,13 +26,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
-  // int current_page = 0;
-
-  // List listOfPages = [
-  //   LoginPage(title: "Login Page"),
-  //   ReceiptPage(title: "My Receipts"),
-  // ];
-
   void goToReceiptsPage() {
     print("HERE");
     Navigator.push(
@@ -57,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var screenWidth = MediaQuery.of(context).size.width;
 
     var searchBar = Container(
-        width: screenWidth * 0.85,
+        width: screenWidth * 0.82,
         alignment: Alignment.center,
         margin: EdgeInsets.all(30),
         padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),

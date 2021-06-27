@@ -7,6 +7,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:receipthub/trends.dart';
 
 import '../components/PhysicsBox.dart';
 import '../components/chart.dart';
@@ -61,6 +62,7 @@ class _MainClassState extends State<MainClass> {
   List listOfPages = [
     MyHomePage(title: "Home Page"),
     ReceiptPage(title: "My Receipts"),
+    Trends(title: "Title Page"),
   ];
 
   Widget build(BuildContext context) {
@@ -87,6 +89,12 @@ class _MainClassState extends State<MainClass> {
                 BottomNavyBarItem(
                   icon: Icon(Icons.access_time),
                   title: Text('Receipts'),
+                  activeColor: backgroundBlue,
+                  inactiveColor: darkBlue,
+                ),
+                BottomNavyBarItem(
+                  icon: Icon(Icons.insert_chart_outlined_rounded),
+                  title: Text('Trends'),
                   activeColor: backgroundBlue,
                   inactiveColor: darkBlue,
                 ),
