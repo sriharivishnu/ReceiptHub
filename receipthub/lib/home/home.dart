@@ -8,8 +8,11 @@ import '../components/PhysicsBox.dart';
 import '../components/chart.dart';
 import '../components/chart2.dart';
 import '../components/chart3.dart';
+import '../constants.dart';
+import '../login.dart';
 import '../nfc/nfc.dart';
 import '../receipts/receipts.dart';
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -23,7 +26,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
-  int current_page = 0;
+  // int current_page = 0;
+
+  // List listOfPages = [
+  //   LoginPage(title: "Login Page"),
+  //   ReceiptPage(title: "My Receipts"),
+  // ];
 
   void goToReceiptsPage() {
     print("HERE");
@@ -49,9 +57,9 @@ class _MyHomePageState extends State<MyHomePage> {
     var screenWidth = MediaQuery.of(context).size.width;
 
     var searchBar = Container(
-        width: screenWidth * 0.9,
+        width: screenWidth * 0.85,
         alignment: Alignment.center,
-        margin: EdgeInsets.all(20),
+        margin: EdgeInsets.all(30),
         padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
         // height: 50,
         decoration: BoxDecoration(
@@ -74,13 +82,30 @@ class _MyHomePageState extends State<MyHomePage> {
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0)),
         ));
+    final myReceiptsButton = Material(
+      elevation: 5.0,
+      borderRadius: BorderRadius.circular(30.0),
+      color: textBlue,
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        onPressed: () {
+          goToReceiptsPage();
+        },
+        child: Text("My Receipts",
+            textAlign: TextAlign.center,
+            style:
+            style.copyWith(color: darkBlue, fontWeight: FontWeight.bold)),
+      ),
+    );
 
     return Container(
-        color: Colors.white,
+        color: backgroundBlue,
         child: SafeArea(
             child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: backgroundBlue,
           body: Stack(children: [
+            // listOfPages[current_page],
             Column(children: [
               Row(
                 children: [searchBar],
@@ -90,11 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
               Container(
                   width: screenWidth * 0.5,
-                  child: Button(
-                    text: "View My Receipts",
-                    callback: goToReceiptsPage,
-                  )),
+                child: myReceiptsButton,
+              ),
             ]),
+            // listOfPages[current_page],
             Positioned(
                 bottom: 0,
                 child: PhysicsBox(
@@ -107,57 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
               goToAddReceipt();
             },
             child: Icon(Icons.add),
-            backgroundColor: Colors.red,
+            backgroundColor: textBlue,
           ),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          bottomNavigationBar: BubbleBottomBar(
-            opacity: .2,
-            currentIndex: current_page,
-            onTap: (i) => {print(i)},
-            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            elevation: 8,
-            fabLocation: BubbleBottomBarFabLocation.center, //new
-            hasNotch: true, //new
-            hasInk: true, //new, gives a cute ink effect
-            inkColor:
-                Colors.black12, //optional, uses theme color if not specified
-            items: <BubbleBottomBarItem>[
-              BubbleBottomBarItem(
-                  backgroundColor: Colors.red,
-                  icon: Icon(
-                    Icons.home,
-                    color: Colors.black,
-                  ),
-                  activeIcon: Icon(
-                    Icons.home,
-                    color: Colors.red,
-                  ),
-                  title: Text("Home")),
-              BubbleBottomBarItem(
-                  backgroundColor: Colors.deepPurple,
-                  icon: Icon(
-                    Icons.access_time,
-                    color: Colors.black,
-                  ),
-                  activeIcon: Icon(
-                    Icons.access_time,
-                    color: Colors.deepPurple,
-                  ),
-                  title: Text("Receipts")),
-              BubbleBottomBarItem(
-                  backgroundColor: Colors.indigo,
-                  icon: Icon(
-                    Icons.pie_chart_outline_rounded,
-                    color: Colors.black,
-                  ),
-                  activeIcon: Icon(
-                    Icons.pie_chart_outline_rounded,
-                    color: Colors.indigo,
-                  ),
-                  title: Text("Trends"))
-            ],
-          ),
+              FloatingActionButtonLocation.centerFloat,
+              // bottomNavigationBar: actionBar,
         )));
   }
 }
@@ -212,6 +190,7 @@ class _GalleryViewState extends State<GalleryView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundBlue,
       body: Column(children: [
         CarouselSlider(
           options: CarouselOptions(

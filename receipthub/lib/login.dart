@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:receipthub/constants.dart';
 import 'package:receipthub/home/home.dart';
+import 'package:receipthub/main.dart';
 
 import 'login/register.dart';
 
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       context,
       PageTransition(
           type: PageTransitionType.leftToRight,
-          child: MyHomePage(title: "Home Page")),
+          child: MainClass()),
     );
   }
 

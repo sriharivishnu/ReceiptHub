@@ -30,6 +30,7 @@ dependencies:
   provider: ^5.0.0
   bubble_bottom_bar: ^1.2.0
   page_transition: "^2.0.2"
+  bottom_navy_bar: ^5.5.0
 
 
   # The following adds the Cupertino Icons font to your application.
