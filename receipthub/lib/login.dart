@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:receipthub/constants.dart';
-import 'package:receipthub/routeFunctions.dart';
+import 'package:receipthub/home/home.dart';
+
+import 'login/register.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key, required this.title}) : super(key: key);
@@ -23,6 +26,24 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+
+  void goToRegisterPage() {
+    Navigator.push(
+      context,
+      PageTransition(
+          type: PageTransitionType.leftToRight,
+          child: MyRegisterPage(title: "Register Page")),
+    );
+  }
+
+  void goToHomePage() {
+    Navigator.push(
+      context,
+      PageTransition(
+          type: PageTransitionType.leftToRight,
+          child: MyHomePage(title: "Home Page")),
+    );
+  }
 
   late final AnimationController _controller = AnimationController(
     duration: const Duration(seconds: 3),
@@ -62,7 +83,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
         onPressed: () {
-          Navigator.of(context).push(createRouteToHome());
+          goToHomePage();
         },
         child: Text("Login",
             textAlign: TextAlign.center,
@@ -93,7 +114,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       decoration: TextDecoration.underline,
                       color: Colors.blue)),
               onTap: () {
-                Navigator.of(context).push(createRouteToRegister());
+                goToRegisterPage();
               }),
         ],
       ),
