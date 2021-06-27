@@ -25,7 +25,7 @@ payHead = [0x02, 0x65, 0x6e]
 
 payload = bytearray(rid.encode("utf-8"))
 
-head[2] = len(head) + len(payload)
+head[2] = len(payHead) + len(payload)
 
 head = bytearray(head)
 payHead = bytearray(payHead)
