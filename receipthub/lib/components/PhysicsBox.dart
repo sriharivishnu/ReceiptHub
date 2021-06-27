@@ -94,7 +94,7 @@ class BoxState extends State<PhysicsBox> with TickerProviderStateMixin {
       start = null;
       point = null;
       if (boxPosition! > 0.3 && !expanded) {
-        expanded = true;
+        expanded = false;
       } else if (boxPosition! < 0.7 && expanded) {
         expanded = false;
       }

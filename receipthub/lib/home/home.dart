@@ -1,3 +1,4 @@
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +8,7 @@ import '../components/PhysicsBox.dart';
 import '../components/chart.dart';
 import '../components/chart2.dart';
 import '../components/chart3.dart';
+import '../nfc/nfc.dart';
 import '../receipts/receipts.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -21,13 +23,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
 
+  int current_page = 0;
+
   void goToReceiptsPage() {
+    print("HERE");
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => ReceiptPage(
                 title: "My Receipts",
               )),
+    );
+  }
+
+  void goToAddReceipt() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => TagReadPage.create()),
     );
   }
 
@@ -67,58 +79,117 @@ class _MyHomePageState extends State<MyHomePage> {
         color: Colors.white,
         child: SafeArea(
             child: Scaffold(
-                backgroundColor: Colors.white,
-                body: Stack(children: [
-                  Column(children: [
-                    Row(
-                      children: [searchBar],
-                    ),
-                    // BarChartSample3(),
-                    Container(height: 350, child: GalleryView()),
+          backgroundColor: Colors.white,
+          body: Stack(children: [
+            Column(children: [
+              Row(
+                children: [searchBar],
+              ),
+              // BarChartSample3(),
+              Container(height: 300, child: GalleryView()),
 
-                    Container(
-                      width: screenWidth * 0.5,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          goToReceiptsPage();
-                        },
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                              ),
-                            ),
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                                EdgeInsets.all(15))),
-                        child: Row(
-                          children: <Widget>[
-                            SizedBox(width: 18),
-                            Text("View My Receipts",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white)),
-                            SizedBox(width: 6),
-                            Icon(Icons.chevron_right, color: Colors.white),
-                          ],
-                        ),
-                      ),
-                    )
-                  ]),
-                  Positioned(
-                      bottom: 0,
-                      child: PhysicsBox(
-                        boxPosition: 0.1,
-                        children: [
-                          // Center(
-                          //     child: MaterialButton(
-                          //         onPressed: () {},
-                          //         color: Colors.indigo,
-                          //         minWidth: 100,
-                          //         child: Text("Add Receipt",
-                          //             style: TextStyle(color: Colors.white))))
-                        ],
-                      ))
-                ]))));
+              Container(
+                  width: screenWidth * 0.5,
+                  child: Button(
+                    text: "View My Receipts",
+                    callback: goToReceiptsPage,
+                  )),
+            ]),
+            Positioned(
+                bottom: 0,
+                child: PhysicsBox(
+                  boxPosition: 0.1,
+                  children: [],
+                ))
+          ]),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              goToAddReceipt();
+            },
+            child: Icon(Icons.add),
+            backgroundColor: Colors.red,
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: BubbleBottomBar(
+            opacity: .2,
+            currentIndex: current_page,
+            onTap: (i) => {print(i)},
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+            elevation: 8,
+            fabLocation: BubbleBottomBarFabLocation.center, //new
+            hasNotch: true, //new
+            hasInk: true, //new, gives a cute ink effect
+            inkColor:
+                Colors.black12, //optional, uses theme color if not specified
+            items: <BubbleBottomBarItem>[
+              BubbleBottomBarItem(
+                  backgroundColor: Colors.red,
+                  icon: Icon(
+                    Icons.home,
+                    color: Colors.black,
+                  ),
+                  activeIcon: Icon(
+                    Icons.home,
+                    color: Colors.red,
+                  ),
+                  title: Text("Home")),
+              BubbleBottomBarItem(
+                  backgroundColor: Colors.deepPurple,
+                  icon: Icon(
+                    Icons.access_time,
+                    color: Colors.black,
+                  ),
+                  activeIcon: Icon(
+                    Icons.access_time,
+                    color: Colors.deepPurple,
+                  ),
+                  title: Text("Receipts")),
+              BubbleBottomBarItem(
+                  backgroundColor: Colors.indigo,
+                  icon: Icon(
+                    Icons.pie_chart_outline_rounded,
+                    color: Colors.black,
+                  ),
+                  activeIcon: Icon(
+                    Icons.pie_chart_outline_rounded,
+                    color: Colors.indigo,
+                  ),
+                  title: Text("Trends"))
+            ],
+          ),
+        )));
+  }
+}
+
+class Button extends StatelessWidget {
+  final GestureTapCallback callback;
+  final String text;
+  Button({Key? key, required this.callback, required this.text})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: callback,
+      style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+          ),
+          padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(10))),
+      child: Row(
+        children: <Widget>[
+          SizedBox(width: 18),
+          Text(this.text,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white)),
+          SizedBox(width: 25),
+          Icon(Icons.chevron_right, color: Colors.white),
+        ],
+      ),
+    );
   }
 }
 
@@ -145,34 +216,15 @@ class _GalleryViewState extends State<GalleryView> {
         CarouselSlider(
           options: CarouselOptions(
             autoPlay: true,
-            aspectRatio: 1.0,
-            height: 300,
+            aspectRatio: 1.4,
+            height: 250,
             enlargeCenterPage: true,
-            autoPlayAnimationDuration: Duration(seconds: 1),
+            autoPlayAnimationDuration: Duration(seconds: 3),
           ),
           items: graphList
               .map((item) =>
                   Container(alignment: Alignment.center, child: item) as Widget)
               .toList(),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: graphList.asMap().entries.map((entry) {
-            return GestureDetector(
-              onTap: () => _controller.animateToPage(entry.key),
-              child: Container(
-                width: 12.0,
-                height: 12.0,
-                margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : Colors.black)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
-              ),
-            );
-          }).toList(),
         ),
       ]),
     );

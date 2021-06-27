@@ -26,6 +26,10 @@ dependencies:
     sdk: flutter
   fl_chart: ^0.36.2
   carousel_slider: ^4.0.0
+  nfc_manager:
+  provider: ^5.0.0
+  bubble_bottom_bar: ^1.2.0
+
 
 
   # The following adds the Cupertino Icons font to your application.
