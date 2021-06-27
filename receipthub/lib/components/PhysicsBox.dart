@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
+import '../constants.dart';
+
 //https://github.com/tensor-programming/Flutter-Physics-Animations/blob/master/lib/main.dart
 class PhysicsBox extends StatefulWidget {
   final boxPosition;
@@ -55,7 +57,7 @@ class BoxState extends State<PhysicsBox> with TickerProviderStateMixin {
             width: screenWidth,
             child: CustomPaint(
                 painter: BoxPainter(
-              color: Colors.lightBlue,
+              color: textBlue,
               boxPosition: boxPosition!,
               boxPositionOnStart: boxPositionOnStart ?? 0.1,
               touchPoint: point,

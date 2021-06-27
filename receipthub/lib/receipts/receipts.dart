@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:receipthub/home/home.dart';
 
+import '../constants.dart';
+import '../login.dart';
 import '../models/Receipt.dart';
 
 class ReceiptPage extends StatefulWidget {
@@ -32,26 +35,51 @@ class _ReceiptPageState extends State<ReceiptPage>
     Receipt([Item("Paul", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
     Receipt([Item("Cookies", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
     Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
+    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
+    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
+    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
+    Receipt([Item("Orange", 10.99)], Store("Zehrs", "Luxembourg", "ID"), 100),
   ];
-  void onBackButton() {}
+  void onBackButton() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MyHomePage(
+            title: "Home Page",
+          )),
+    );
+  }
+
+  void goToHomePage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => MyHomePage(
+            title: "Home Page",
+          )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white,
+        color: backgroundBlue,
         child: SafeArea(
           child: Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: backgroundBlue,
               body: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
-                      child: Icon(Icons.arrow_back_ios_new_rounded),
+                      child: Icon(Icons.arrow_back_ios_new_rounded,
+                        color: textBlue,),
                       onTap: onBackButton,
                     ),
                     Padding(
                         child: Text("Receipts",
                             style: TextStyle(
+                              color: textBlue,
                                 fontSize: 40, fontWeight: FontWeight.w500)),
                         padding: EdgeInsets.symmetric(vertical: 10))
                   ],
@@ -66,7 +94,8 @@ class _ReceiptPageState extends State<ReceiptPage>
                         children: receiptData
                             .map((item) => ReceiptWidget(receipt: item))
                             .toList()))
-              ])),
+              ]),
+          ),
         ));
   }
 }
@@ -77,24 +106,57 @@ class ReceiptWidget extends StatelessWidget {
   final Receipt receipt;
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Center(
+      child: Card(
+        elevation: 15.0,
+        color: darkBlue,
         margin: EdgeInsets.all(10),
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(10),
-        //   color: Colors.grey[300],
-        //   boxShadow: [
-        //     BoxShadow(
-        //         color: Colors.grey,
-        //         blurRadius: 2.0,
-        //         spreadRadius: 0.15,
-        //         offset: Offset.fromDirection(-5.0))
-        //   ],
-        // ),
-        child: Column(children: [
-          Text(
-            receipt.store.name,
-            textAlign: TextAlign.center,
-          )
-        ]));
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            print('Card tapped.');
+          },
+          child: SizedBox(
+            width: 300,
+            height: 200,
+            child: Column(children: [
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  receipt.store.name,
+                  style: TextStyle(color: textBlue, fontSize: 14.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "9.99",
+                  style: TextStyle(color: textBlue, fontSize: 12.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "Test Item Purchased",
+                  style: TextStyle(color: textBlue, fontSize: 12.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Text(
+                  "6:21 09/27/2002",
+                  style: TextStyle(color: textBlue, fontSize: 12.0),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ]),
+          ),
+        ),
+      ),
+    );
+
   }
 }
